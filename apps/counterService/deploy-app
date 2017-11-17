@@ -1,0 +1,3 @@
+#/bin/bash
+
+CONTAINER_REPO=myacr.azurecr.io/myusername GIT_REPO=https://github.com/timfpark/counterService SERVICE_NAME=counter-service APP_TYPE=web-service ../common/deploy-app

@@ -1,0 +1,3 @@
+#/bin/bash
+
+docker login myacr.azurecr.io -u "USERID" -p "PASSWORD"

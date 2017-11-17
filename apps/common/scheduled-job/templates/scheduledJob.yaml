@@ -1,0 +1,17 @@
+apiVersion: batch/v2alpha1
+kind: CronJob
+metadata:
+  name: {{ .Values.serviceName }}
+spec:
+  schedule: {{ .Values.cronSchedule }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          imagePullSecrets:
+            - name: {{ .Values.imagePullSecrets }}
+          containers:
+          - name: {{ .Values.serviceName }}
+            image: {{ .Values.image }}
+            imagePullPolicy: {{ .Values.imagePullPolicy }}
+          restartPolicy: OnFailure

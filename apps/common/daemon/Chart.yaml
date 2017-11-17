@@ -1,0 +1,9 @@
+name: user-service 
+home: https://github.com/timfpark/userService
+version: 0.3.0
+description: User authentication service 
+sources:
+  - https://github.com/timfpark/userService
+maintainers:
+  - name: Tim Park 
+    email: timfpark@gmail.com

@@ -1,0 +1,11 @@
+serviceName: "counter-service"
+servicePort: 3030
+replicas: 3
+imagePullPolicy: "Always"
+imagePullSecrets: acr-tpark
+cpu: "250m"
+memory: "256Mi"
+
+# Ingress settings
+hostname: counter.mydomain.com
+tlsSecretName: mydomain-tls-secret

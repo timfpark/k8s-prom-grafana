@@ -1,0 +1,3 @@
+kubectl create namespace grafana 
+kubectl create secret tls grafana-server-tls --key ../ssl/wildcard.mydomain.com.key --cert ../ssl/wildcard.mydomain.com-bundle.crt --namespace grafana
+helm install -f values.yaml stable/grafana --name grafana --namespace grafana

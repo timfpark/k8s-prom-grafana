@@ -1,0 +1,3 @@
+kubectl create namespace prometheus
+kubectl create secret tls prometheus-server-tls --key ../ssl/wildcard.mydomain.com.key --cert ../ssl/wildcard.mydomain.com-bundle.crt --namespace prometheus
+helm install -f values.yaml stable/prometheus --name prometheus --namespace prometheus

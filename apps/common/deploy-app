@@ -1,0 +1,31 @@
+#!/bin/bash
+
+kubectl create namespace $SERVICE_NAME
+
+if [ "$APP_TYPE" == "web-service" ]; then
+  kubectl create secret tls rhom-tls-secret --key ../../ssl/wildcard.rhom.io.key --cert ../../ssl/wildcard.rhom.io-bundle.crt --namespace $SERVICE_NAME
+fi
+
+rm -rf app
+git clone $GIT_REPO app
+
+cd app
+
+if [ -n "$GIT_BRANCH" ]; then
+  echo "Checking out branch $GIT_BRANCH"
+  git checkout $GIT_BRANCH
+fi
+
+DATE_TAG=`date -u +"%Y%m%dT%H%M%SZ"`
+
+GIT_SHA=`git log -1 --format="%H"`
+echo $DATE_TAG-$GIT_SHA > deployment_sha  # TODO: legacy - remove when migrated
+echo $DATE_TAG-$GIT_SHA > deploymentTag
+
+cd ..
+
+RELEASE_TAG=$CONTAINER_REPO/$SERVICE_NAME:$DATE_TAG
+docker build -t $RELEASE_TAG .
+docker push $RELEASE_TAG
+
+helm upgrade $SERVICE_NAME --namespace $SERVICE_NAME --install --set image=$RELEASE_TAG --values=./values.yaml ../common/$APP_TYPE/.
